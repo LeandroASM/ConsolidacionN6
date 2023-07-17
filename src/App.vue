@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <!-- Image and text -->
+    <nav class="navbar navbar-dark bg-dark">
+      <a class="navbar-brand"><i class="fa-solid fa-gamepad" style="color: #ffffff;"></i> Games Opinion</a>
+      <li><router-link class="home" to="/"><i class="fa-solid fa-house" style="color: #ffffff;"></i> Home</router-link></li>
     </nav>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -17,16 +18,13 @@
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
-}
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
 
-nav a.router-link-exact-active {
-  color: #42b983;
+
+
+.home{
+  color: white;
+  list-style: none;
+  
 }
 </style>
