@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
     name: 'Login-view',
     // props: {},
@@ -30,9 +31,11 @@ export default {
     },
     // computed: {},
     methods: {
+        ...mapActions(['setNameUser']),
         validarDatos(){
             if(this.users.find(user => user.usuario== this.usuario && user.password== this.pass)){
-                this.$route.push('/user')
+                this.setNameUser(this.usuario)
+                this.$router.push(`/user/${this.usuario}`)
             }
         }
     }

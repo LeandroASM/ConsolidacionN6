@@ -8,23 +8,25 @@
             </div>
             <div class="form-group">
                 <label for="">Opinión</label><br>
-                <textarea name="" id="" cols="98" rows="6" style="resize:none" v-model="opinion" placeholder="Tu opinión va aquí..."></textarea>
+                <textarea cols="98" rows="6" style="resize:none" v-model="opinion" placeholder="Tu opinión va aquí..."></textarea>
             </div>
-            <div @click="addComent()" class="btn btn-primary">Agregar</div>
+            <div @click="addComent()" v-if="!editar" class="btn btn-primary">Agregar</div>
+            <div @click="modComment()" v-else class="btn btn-success">Actualizar</div>
             
         </form>
 
-        <div v-if="!opinionCreada" class="alert alert-danger" role="alert">
+        <div v-if="opiniones.length == 0" class="alert alert-danger" role="alert">
             No existen opiniones para mostrar
         </div>
 
-        <Comentarios v-if="opinionCreada" :comentarios='opiniones'/>
+        <Comentarios v-if="opiniones.length != 0" :comentarios='opiniones' @commentToDelete="opinionABorrar" @commentToEdit="opinionAEditar"/>
 
     </div>
 </template>
 
 <script>
 import Comentarios from '@/components/Comentarios.vue'
+
 export default {
     name: 'comentar-view',
     // props: {},
@@ -33,7 +35,9 @@ export default {
             nombre:'',
             opinion:'',
             opinionCreada: false,
-            opiniones:[]
+            opiniones:[],
+            editar: false,
+            opinionModificada: {}
         }
     },
     computed: {
@@ -45,8 +49,28 @@ export default {
         addComent(){
             this.opiniones.push({nombre:this.nombre, opinion:this.opinion})
             this.opinionCreada = true
+            this.nombre = ''
+            this.opinion = ''
+        },
+        modComment(){
+            this.opinionModificada = {nombre:this.nombre, opinion:this.opinion}
+            const indice = this.opiniones.findIndex(op => op.opinion == this.opinionModificada.opinion)
+            console.log(indice);
+            
+            if (indice != -1){
+                this.opiniones[indice] = this.opinionModificada
+            }
+        },
+        opinionABorrar(index){
+            this.opiniones.splice(index, 1)
+        },
+        opinionAEditar(opinion){
+            this.nombre = opinion.nombre
+            this.opinion = opinion.opinion
+            this.editar = true
         }
-    },
+
+        },
     // watch: {},
     components: {
         Comentarios

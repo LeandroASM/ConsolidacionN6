@@ -1,10 +1,10 @@
 <template>
-    <h1> Nuevo Componente</h1>
+    <h1> Usuario</h1>
 </template>
 
 <script>
 export default {
-    name: 'component-name',
+    name: 'perfil-component',
     // props: {},
     data: function(){
         return {}

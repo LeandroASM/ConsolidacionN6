@@ -1,40 +1,67 @@
 <template>
-<div>
-    <h1>Comentarios</h1>
+  <div >
+    <h1 class="text-center">Comentarios</h1>
     <div v-for="(opinion, index) in comentarios" :key="index">
-        <div class="alert alert-info" role="alert">Opinión creada por: {{opinion.nombre}}</div>
-        <p>{{opinion.opinion}}</p>
+      <div class="alert alert-info" role="alert">
+        Opinión creada por: {{ opinion.nombre }}
+      </div>
+      <p>{{ opinion.opinion }}</p>
+      <div>
+        <button
+          type="button"
+          @click="deleteComment(index)"
+          class="btn btn-danger"
+        >
+          Eliminar
+        </button>
+        <button
+          type="button"
+          @click="editComment(opinion)"
+          class="btn btn-warning"
+        >
+          Editar
+        </button>
 
-        <button type="button" class="btn btn-danger">Eliminar</button>
-        <button type="button" class="btn btn-warning">Editar</button>
-
+      </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Comentarios-component',
-     props: {
-        comentarios:{
-            type:Array,
-            required:true,
-        }
-     },
-    data: function(){
-        return {}
+  name: "Comentarios-component",
+  props: {
+    comentarios: {
+      type: Array,
+      required: true,
     },
-    // computed: {},
-    //methods: {}
-    // watch: {},
-    // components: {},
-    // mixins: [],
-    // filters: {},
-    // -- Lifecycle Methods
-    // -- End Lifecycle Methods
-}
+  },
+  data: function () {
+    return {
+      localComentarios: [],
+    };
+  },
+  // computed: {},
+  methods: {
+    deleteComment(index) {
+      this.$emit('commentToDelete', index)
+    },
+    editComment(opinion) {
+      this.$emit('commentToEdit', opinion)
+    },
+  },
+  // watch: {},
+  // components: {},
+  // mixins: [],
+  // filters: {},
+  // -- Lifecycle Methods
+  created() {
+    this.localComentarios = [...this.comentarios];
+    
+  },
+  // -- End Lifecycle Methods
+};
 </script>
 
 <style scoped>
-    
 </style>
